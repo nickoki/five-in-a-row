@@ -3,13 +3,18 @@
   <head>
     <meta charset="utf-8">
     <title>Five in a Row</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-resource.min.js"></script>
     <script src="/assets/js/app.js"></script>
   </head>
   <body ng-controller="FiveController as vm">
-    <p>{{vm.rows}}</p>
+    <div class="board">
+      <div class="row" data-ng-repeat="row in vm.board[0].rows">
+        <div class="cell" data-ng-repeat="cell in row.cells track by $index">{{cell}}</div>
+      </div>
+    </div>
     <button ng-click="vm.newGame()" name="Create">New Game</button>
   </body>
 </html>

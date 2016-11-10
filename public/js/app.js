@@ -6,30 +6,53 @@ angular
   ])
   .controller("FiveController", [
     "$scope",
-    "FiveFactory",
+    "RowFactory",
+    "BoardFactory",
     FiveControllerFunction
   ])
-  .factory("FiveFactory",[
+  .factory("RowFactory", [
     "$resource",
-    FiveFactoryFunction
+    RowFactoryFunction
+  ])
+  .factory("BoardFactory", [
+    "$resource",
+    BoardFactoryFunction
   ])
 
-  function FiveControllerFunction($scope, FiveFactory){
-    this.rows = FiveFactory.query()
-    console.log("Controler FXN");
-    this.newGame = function(){
-      this.newRow = new FiveFactory()
-      this.newRow.cells = ["", "", "", "", ""]
-      for (let i = 0; i < 5; i++) {
-        // this.newRow.$save().then(row => {
-        //   console.log("Done");
-        // })
-        socket.emit('new_game_event', this.newRow)
-      }
+
+
+  function FiveControllerFunction($scope, RowFactory, BoardFactory) {
+    BoardFactory.query().$promise.then( board => {
+      this.board = board
+    })
+
+    this.newGame = function() {
+      this.newBoard = new BoardFactory()
+      socket.emit('new_board_event', this.newBoard)
     }
+
+    socket.on('new_board_event', board => {
+      if (board) {
+        $scope.$apply(() => {
+          this.board.push({body: board})
+        })
+      }
+    })
   }
 
-  function FiveFactoryFunction($resource){
+
+
+  function RowFactoryFunction($resource) {
+    return $resource("/api", {}, {
+      newGame: {
+        method: "POST"
+      }
+    })
+  }
+
+
+
+  function BoardFactoryFunction($resource) {
     return $resource("/api", {}, {
       newGame: {
         method: "POST"

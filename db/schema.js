@@ -8,18 +8,11 @@ var RowSchema = new Schema({
   cells: Array,
 })
 
+var BoardSchema = new Schema({
+  rows: [RowSchema]
+})
+
 var Row = mongoose.model("Row", RowSchema)
-
-// var row1 = new Row({
-//   cells: ["", "", "X", "", ""]
-// })
-
-// row1.save((err, row) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log(row);
-//   }
-// })
+var Board = mongoose.model("Board", BoardSchema)
 
 module.exports = mongoose
