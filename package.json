@@ -1,0 +1,26 @@
+{
+  "name": "five-in-a-row",
+  "version": "1.0.0",
+  "description": "Five in a Row game using socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alman92/five-in-a-row.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alman92/five-in-a-row/issues"
+  },
+  "homepage": "https://github.com/alman92/five-in-a-row#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.6",
+    "socket.io": "^1.5.1"
+  }
+}
