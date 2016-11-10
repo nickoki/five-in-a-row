@@ -17,3 +17,7 @@ body {
   height: 40px;
   background: #eee;
 }
+
+.cell:active {
+  background: #ddd;
+}

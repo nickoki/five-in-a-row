@@ -22,13 +22,6 @@ app.get("/api", function(req, res) {
   })
 })
 
-// app.post("/api", function(req, res){
-//   Row.remove({}).then( () => {
-//     Row.create(req.body).then(row =>{
-//       res.json(row)
-//     })
-//   })
-// })
 
 io.on("connection", socket => {
 
@@ -46,14 +39,16 @@ io.on("connection", socket => {
     })
   })
 
-  // socket.on("new_game_event", row => {
-  //   io.emit("new_game_event", row)
-  //   if (row){
-  //     Row.create({
-  //       cells: row
-  //     })
-  //   }
-  // })
+  socket.on("move_event", move => {
+    io.emit("move_event", move)
+    Board.find({}).then(board => {
+      console.log("before" + board[0].rows[1].cells[4]);
+      board[0].rows[1].cells[4].update("X").then(() => {
+
+        console.log("after" + board[0].rows[1].cells[4]);
+      })
+    })
+  })
 })
 
 http.listen(4500, () => {
