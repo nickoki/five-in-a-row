@@ -11,8 +11,10 @@
   </head>
   <body ng-controller="FiveController as vm">
     <div class="board">
-      <div class="row" data-ng-repeat="row in vm.board[0].rows">
-        <div class="cell" data-ng-repeat="cell in row.cells track by $index">{{cell}}</div>
+      <div class="row" data-ng-repeat="row in vm.board[0].rows" id="{{$index}}">
+        <div class="cell" data-ng-repeat="cell in row.cells track by $index" data-ng-click="vm.move(cell, $parent.$index, $index)" id="{{$index}}">
+          {{cell}}
+        </div>
       </div>
     </div>
     <button ng-click="vm.newGame()" name="Create">New Game</button>

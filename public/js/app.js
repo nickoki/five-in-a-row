@@ -38,6 +38,13 @@ angular
         })
       }
     })
+
+    this.move = function(state, rowIndex, cellIndex){
+      if (state == ""){
+        socket.emit("move_event", "X")
+      }
+      console.log(state);
+    }
   }
 
 
