@@ -39,14 +39,17 @@ angular
       }
     })
 
-    this.move = function(state, rowIndex, cellIndex){
-      if (state == ""){
-        socket.emit("move_event", {
-          newState: "X",
-          rowIndex: rowIndex,
-          cellIndex: cellIndex
-        })
-      }
+    this.move = function(state, rowIndex, cellIndex) {
+      let newState = ""
+      if (state == "") { newState = "X" }
+      else if (state == "X") { newState = "O" }
+      else if (state == "O") { newState = "" }
+
+      socket.emit("move_event", {
+        newState: newState,
+        rowIndex: rowIndex,
+        cellIndex: cellIndex
+      })
     }
 
     socket.on('move_event', board => {
