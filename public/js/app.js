@@ -41,10 +41,22 @@ angular
 
     this.move = function(state, rowIndex, cellIndex){
       if (state == ""){
-        socket.emit("move_event", "X")
+        socket.emit("move_event", {
+          newState: "X",
+          rowIndex: rowIndex,
+          cellIndex: cellIndex
+        })
       }
-      console.log(state);
     }
+
+    socket.on('move_event', board => {
+      console.log(board);
+      if (board) {
+        $scope.$apply(() => {
+          this.board.push({body: board})
+        })
+      }
+    })
   }
 
 
