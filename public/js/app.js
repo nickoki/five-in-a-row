@@ -34,7 +34,7 @@ angular
     socket.on('new_board_event', board => {
       if (board) {
         $scope.$apply(() => {
-          this.board.push({body: board})
+          this.board[0] = board
         })
       }
     })
@@ -53,10 +53,9 @@ angular
     }
 
     socket.on('move_event', board => {
-      console.log(board);
       if (board) {
         $scope.$apply(() => {
-          this.board.push({body: board})
+          this.board[0] = board
         })
       }
     })

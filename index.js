@@ -28,8 +28,6 @@ io.on("connection", socket => {
 
   // On new board event, remove old board and replace with an empty one
   socket.on("new_board_event", board => {
-    console.log(board);
-    io.emit("new_board_event", board)
 
     // Delete old board
     Board.remove({}).then( () => {
@@ -39,8 +37,9 @@ io.on("connection", socket => {
         let r = new Row({ cells: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] })
         Board.create({
           rows: [r, r, r, r, r, r, r, r, r, r, r, r, r, r, r, r]
-        }, err => {
+        }, (err, res) => {
           if (err) { console.log(err) }
+          else { io.emit("new_board_event", res) }
         })
       }
     })
@@ -49,7 +48,6 @@ io.on("connection", socket => {
   // On move event (cell click), switch state of cell
   socket.on("move_event", move => {
     console.log(move);
-    io.emit("move_event", move)
 
     // Get board
     Board.find({}).then(board => {
@@ -59,8 +57,9 @@ io.on("connection", socket => {
       newRows[move.rowIndex].cells[move.cellIndex] = move.newState
 
       // Update board with changes
-      Board.findOneAndUpdate({}, { rows: newRows }, { new: true }, err => {
+      Board.findOneAndUpdate({}, { rows: newRows }, { new: true }, (err, res) => {
         if (err) { console.log(err) }
+        else { io.emit("move_event", res) }
       })
     })
   })
